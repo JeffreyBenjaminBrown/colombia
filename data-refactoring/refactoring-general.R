@@ -24,6 +24,7 @@ setdiff(which(is.na(x$dept)), which(is.na(x$province_code)))
 setdiff(which(is.na(x$dept)), which(is.na(x$province)))
 
 # Replace the "" in municipality with NA values
+  # >> todo: make into a togglable assumption
 x$municipality[x$municipality == ""] <- NA
 
 # Row 23 is missing is the muni_code == 5001 with missing dept and prov data
@@ -36,7 +37,12 @@ x$municipality <- 'Medellín'
 tail(x[x$municipality_code == 5001, 1:7])
 
 # What percentage of data is found in each column of the file?
-plot(1:ncol(x), apply(x, 2, function(col) sum(!is.na(col)) / nrow(x)), type = 'l', col = 'blue', xlab = 'Col #', ylab = 'Percentage')
+col_fraction_missing <- apply(x, 2, function(col) sum(is.na(col)) / nrow(x))
+plot(1:ncol(x), col_fraction_missing
+    , type = 'l', col = 'blue', xlab = 'Col #', ylab = 'Percentage')
+cbind(colnames(x), col_fraction_missing)
+# todo: the last many columns are 95%-ish missing
+# was that a single extremely-informative year?
 
 # Remove columns where > 50% of the data is NA
 cols.rm <- apply(x, 2, function(col) sum(is.na(col)) / nrow(x) >= .5)
