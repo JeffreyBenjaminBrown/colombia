@@ -12,16 +12,17 @@ x$dept_code <- as.integer(x$dept_code)
 x$province_code <- as.integer(x$province_code)
 x$municipality_code <- as.integer(x$municipality_code)
 
+# TODO - The mapping between codes and names isn't 1 to 1
+sapply(colnames(x)[1:6], function(col) length(unique(x[ , col])))
+
+# TODO - Merge the 5 regions columns into a single region with the value
+regions <- c('gandina', 'gcaribe', 'gpacifica', 'gorinoquia', 'gamazonia')
+
+
 # Change the Stata time encoding to a year
 library(lubridate)
 convert_timestamp <- function(x) year(as.POSIXct(x/1000000000, origin = '1970-01-01')) + 1
 x$year <- sapply(x$year, convert_timestamp)
-
-# Do the dept and province have NA for the same rows?  YES!
-    # there is no explicit set data type in base R
-setdiff(which(is.na(x$dept_code)), which(is.na(x$province_code)))
-setdiff(which(is.na(x$dept)), which(is.na(x$province_code)))
-setdiff(which(is.na(x$dept)), which(is.na(x$province)))
 
 # Replace the "" in municipality with NA values
   # >> todo: make into a togglable assumption
@@ -35,6 +36,14 @@ x$dept[23] <- 'Antioquia'
 x$province[23] <- 'Valle del aburra'
 x$municipality <- 'Medellín'
 tail(x[x$municipality_code == 5001, 1:7])
+
+# Do the dept and province have NA for the same rows?  YES!
+# there is no explicit set data type in base R
+# 2015 is the only year for which this data is missing
+setdiff(which(is.na(x$dept_code)), which(is.na(x$province_code)))
+setdiff(which(is.na(x$dept)), which(is.na(x$province_code)))
+setdiff(which(is.na(x$dept)), which(is.na(x$province)))
+table(x$year[is.na(x$dept)])
 
 # What percentage of data is found in each column of the file?
 col_fraction_missing <- apply(x, 2, function(col) sum(is.na(col)) / nrow(x))
