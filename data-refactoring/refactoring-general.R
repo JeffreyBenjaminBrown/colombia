@@ -76,7 +76,6 @@ x <- x[ , !cols.rm]
 #[28] "gpc"               "gini"             
 
 
-cor(x[ , 10:14], use = 'complete.obs')
 
 # Plot the cors to find interesting ones
 tbl <- cor(x[ , 10:ncol(x)], use = 'complete.obs')
