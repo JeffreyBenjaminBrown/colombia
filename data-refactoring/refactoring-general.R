@@ -40,7 +40,9 @@ tail(x[x$municipality_code == 5001, 1:7])
 col_fraction_missing <- apply(x, 2, function(col) sum(is.na(col)) / nrow(x))
 plot(1:ncol(x), col_fraction_missing
     , type = 'l', col = 'blue', xlab = 'Col #', ylab = 'Percentage')
-cbind(colnames(x), col_fraction_missing)
+
+fraction_order <- order(col_fraction_missing)
+cbind(colnames(x)[fraction_order], col_fraction_missing[fraction_order])
 # todo: the last many columns are 95%-ish missing
 # was that a single extremely-informative year?
 
