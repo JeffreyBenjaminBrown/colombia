@@ -23,10 +23,45 @@ setdiff(which(is.na(x$dept_code)), which(is.na(x$province_code)))
 setdiff(which(is.na(x$dept)), which(is.na(x$province_code)))
 setdiff(which(is.na(x$dept)), which(is.na(x$province)))
 
-# Which municipalities have NA values for the dept / province?
-  # The table has one column named ""; none of the other strings were missing
-muni.tbl <- table(x$municipality[is.na(x$dept_code)])
-muni.tbl[muni.tbl > 0]
+# Replace the "" in municipality with NA values
+x$municipality[x$municipality == ""] <- NA
 
-# The 1 bad value for muni_code 5001
-x[x$municipality_code == 5001, 1:7]
+# Row 23 is missing is the muni_code == 5001 with missing dept and prov data
+tail(x[x$municipality_code == 5001, 1:7])
+x$dept_code[23] <- 5
+x$province_code[23] <- 595
+x$dept[23] <- 'Antioquia'
+x$province[23] <- 'Valle del aburra'
+x$municipality <- 'Medellín'
+tail(x[x$municipality_code == 5001, 1:7])
+
+# What percentage of data is found in each column of the file?
+plot(1:ncol(x), apply(x, 2, function(col) sum(!is.na(col)) / nrow(x)), type = 'l', col = 'blue', xlab = 'Col #', ylab = 'Percentage')
+
+# Remove columns where > 50% of the data is NA
+cols.rm <- apply(x, 2, function(col) sum(is.na(col)) / nrow(x) >= .5)
+colnames(x)[cols.rm]  # These cols are going to be removed
+colnames(x)[!cols.rm] # These cols are going to be kept
+x <- x[ , !cols.rm]
+
+
+## Jeff - We're going to need translations for these names!
+#> colnames(x)
+# [1] "dept_code"         "province_code"     "municipality_code"
+# [4] "dept"              "province"          "municipality"     
+# [7] "year"              "ao_crea"           "act_adm"          
+#[10] "gandina"           "gcaribe"           "gpacifica"        
+#[13] "gorinoquia"        "gamazonia"         "pobl_rur"         
+#[16] "pobl_urb"          "pobl_tot"          "indrural"         
+#[19] "areaoficialkm2"    "areaoficialhm2"    "altura"           
+#[22] "discapital"        "dismdo"            "disbogota"        
+#[25] "codmdo"            "mercado_cercano"   "distancia_mercado"
+#[28] "gpc"               "gini"             
+
+
+cor(x[ , 10:14], use = 'complete.obs')
+
+# Plot the cors to find interesting ones
+tbl <- cor(x[ , 10:ncol(x)], use = 'complete.obs')
+for (i in 1:nrow(tbl)) tbl[i, i] <- 0    # Set the diagonal to 0
+for (i in 1:nrow(tbl)) plot(1:nrow(tbl), tbl[ , i], type = 'l', col = 'blue', main = rownames(tbl)[i])
