@@ -12,18 +12,11 @@ convert_timestamp <- function(x) year(as.POSIXct(x/1000000000, origin = '1970-01
 land$year <- sapply(land$year, convert_timestamp)
 table(land$year)
 
-# What percentage of data is found in each column of the file?
-col_fraction_missing <- 100 * apply(land, 2, function(col) sum(is.na(col)) / nrow(land))
-plot(1:ncol(land), col_fraction_missing, type = 'l', col = 'blue',
-     main = 'Land - Missing Data', xlab = 'Col #', ylab = 'Percent Missing')
-abline(h = 50, col = 'red')
-
-#fraction_order <- order(col_fraction_missing)
-#cbind(colnames(land)[fraction_order], col_fraction_missing[fraction_order])
+## Write the refactored data to the refactored-data directory
+write.csv(land, file = 'refactored-data/land.csv', row.names = FALSE)
 
 
-# Remove columns where > 50% of the data is NA
-#cols.rm <- apply(land, 2, function(col) sum(is.na(col)) / nrow(land) >= .5)
-#colnames(land)[cols.rm]  # These cols are going to be removed
-#colnames(land)[!cols.rm] # These cols are going to be kept
-#land <- land[ , !cols.rm]
+# Compare the values in the old and new files
+x <- read.csv('refactored-data/land.csv', header = T)
+diff <- sapply(1:ncol(x), function(n) max(abs(land[ , n] - x[ , n]), na.rm = TRUE))
+max(diff)
