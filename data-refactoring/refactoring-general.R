@@ -11,71 +11,34 @@ general$dept_code <- as.integer(general$dept_code)
 general$province_code <- as.integer(general$province_code)
 general$municipality_code <- as.integer(general$municipality_code)
 
-# TODO - The mapping between codes and names isn't 1 to 1
-sapply(colnames(general)[1:6], function(col) length(unique(general[ , col])))
-
-# TODO - Merge the 5 regions columns into a single region with the value
-regions <- c('gandina', 'gcaribe', 'gpacifica', 'gorinoquia', 'gamazonia')
-
-
 # Change the Stata time encoding to a year
 library(lubridate)
 convert_timestamp <- function(x) year(as.POSIXct(x/1000000000, origin = '1970-01-01')) + 1
 general$year <- sapply(general$year, convert_timestamp)
 
 # Replace the "" in municipality with NA values
-  # >> todo: make into a togglable assumption
 general$municipality[general$municipality == ""] <- NA
 
-# Row 23 is missing is the muni_code == 5001 with missing dept and prov data
-tail(general[general$municipality_code == 5001, 1:7])
-general$dept_code[23] <- 5
-general$province_code[23] <- 595
-general$dept[23] <- 'Antioquia'
-general$province[23] <- 'Valle del aburra'
-general$municipality <- 'Medellín'
-tail(general[general$municipality_code == 5001, 1:7])
+# Every 23rd row in the data sense is filled with NA values;  Dropping them for now
 
-# Do the dept and province have NA for the same rows?  YES!
-# there is no explicit set data type in base R
-# 2015 is the only year for which this data is missing
-setdiff(which(is.na(general$dept_code)), which(is.na(general$province_code)))
-setdiff(which(is.na(general$dept)), which(is.na(general$province_code)))
-setdiff(which(is.na(general$dept)), which(is.na(general$province)))
-table(general$year[is.na(general$dept)])
+# Region names are used in a few places below
+region.names <- c('gandina', 'gcaribe', 'gpacifica', 'gorinoquia', 'gamazonia')
 
-# What percentage of data is found in each column of the file?
-col_fraction_missing <- apply(general, 2, function(col) sum(is.na(col)) / nrow(general))
-plot(1:ncol(general), col_fraction_missing
-    , type = 'l', col = 'blue', xlab = 'Col #', ylab = 'Percentage')
+# Checking that the regions are all NA on the same rows.  Yes.
+colnames(general)[10]
+gandina.col <- 10
+sapply(1:4, function(n) setdiff(which(is.na(general[ , gandina.col])), which(is.na(general[ , gandina.col + n]))))
 
-fraction_order <- order(col_fraction_missing)
-cbind(colnames(general)[fraction_order], col_fraction_missing[fraction_order])
-# todo: the last many columns are 95%-ish missing
-# was that a single extremely-informative year?
+# All of these rows are completely blank;  Dropping them for now
+general <- general[!is.na(general$gandina), ]
 
-# Remove columns where > 50% of the data is NA
-#cols.rm <- apply(general, 2, function(col) sum(is.na(col)) / nrow(general) >= .5)
-#colnames(general)[cols.rm]  # These cols are going to be removed
-#colnames(general)[!cols.rm] # These cols are going to be kept
-#general <- general[ , !cols.rm]
+# Replacing the 5 region columns with a region column that contains a factor w/ the region values
+regions <- colSums(t(general[ , colnames(general) %in% region.names]) * 1:length(region.names))
+general[ , gandina.col] <- factor(regions, levels = 1:5, labels = c('Andina', 'Caribe', 'Pacifica', 'Orinoquia', 'Amazonia'))
+colnames(general)[gandina.col] <- "region"
+general <- general[ , -11:-14]
+general[1:4, 1:15]
 
 
-## Jeff - We're going to need translations for these names!
-#> colnames(general)
-# [1] "dept_code"         "province_code"     "municipality_code"
-# [4] "dept"              "province"          "municipality"
-# [7] "year"              "ao_crea"           "act_adm"
-#[10] "gandina"           "gcaribe"           "gpacifica"
-#[13] "gorinoquia"        "gamazonia"         "pobl_rur"
-#[16] "pobl_urb"          "pobl_tot"          "indrural"
-#[19] "areaoficialkm2"    "areaoficialhm2"    "altura"
-#[22] "discapital"        "dismdo"            "disbogota"
-#[25] "codmdo"            "mercado_cercano"   "distancia_mercado"
-#[28] "gpc"               "gini"
-
-
-# Plot the cors to find interesting ones
-#tbl <- cor(general[ , 10:ncol(general)], use = 'complete.obs')
-#for (i in 1:nrow(tbl)) tbl[i, i] <- 0    # Set the diagonal to 0
-#for (i in 1:nrow(tbl)) plot(1:nrow(tbl), tbl[ , i], type = 'l', col = 'blue', main = rownames(tbl)[i])
+## Write the refactored data to the refactored-data directory
+write.csv(general, file = 'refactored-data/general.csv', row.names = FALSE)
