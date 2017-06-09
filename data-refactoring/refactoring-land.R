@@ -14,7 +14,7 @@ table(land$year)
 
 # What percentage of data is found in each column of the file?
 col_fraction_missing <- 100 * apply(land, 2, function(col) sum(is.na(col)) / nrow(land))
-plot(1:ncol(land), col_fraction_missing, type = 'l', col = 'blue', 
+plot(1:ncol(land), col_fraction_missing, type = 'l', col = 'blue',
      main = 'Land - Missing Data', xlab = 'Col #', ylab = 'Percent Missing')
 abline(h = 50, col = 'red')
 
@@ -27,4 +27,3 @@ abline(h = 50, col = 'red')
 #colnames(land)[cols.rm]  # These cols are going to be removed
 #colnames(land)[!cols.rm] # These cols are going to be kept
 #land <- land[ , !cols.rm]
-

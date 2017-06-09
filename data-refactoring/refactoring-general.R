@@ -64,15 +64,15 @@ cbind(colnames(general)[fraction_order], col_fraction_missing[fraction_order])
 ## Jeff - We're going to need translations for these names!
 #> colnames(general)
 # [1] "dept_code"         "province_code"     "municipality_code"
-# [4] "dept"              "province"          "municipality"     
-# [7] "year"              "ao_crea"           "act_adm"          
-#[10] "gandina"           "gcaribe"           "gpacifica"        
-#[13] "gorinoquia"        "gamazonia"         "pobl_rur"         
-#[16] "pobl_urb"          "pobl_tot"          "indrural"         
-#[19] "areaoficialkm2"    "areaoficialhm2"    "altura"           
-#[22] "discapital"        "dismdo"            "disbogota"        
+# [4] "dept"              "province"          "municipality"
+# [7] "year"              "ao_crea"           "act_adm"
+#[10] "gandina"           "gcaribe"           "gpacifica"
+#[13] "gorinoquia"        "gamazonia"         "pobl_rur"
+#[16] "pobl_urb"          "pobl_tot"          "indrural"
+#[19] "areaoficialkm2"    "areaoficialhm2"    "altura"
+#[22] "discapital"        "dismdo"            "disbogota"
 #[25] "codmdo"            "mercado_cercano"   "distancia_mercado"
-#[28] "gpc"               "gini"             
+#[28] "gpc"               "gini"
 
 
 # Plot the cors to find interesting ones

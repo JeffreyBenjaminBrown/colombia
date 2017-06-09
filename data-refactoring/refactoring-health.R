@@ -13,7 +13,7 @@ table(health$year)
 
 # What percentage of data is found in each column of the file?
 col_fraction_missing <- 100 * apply(health, 2, function(col) sum(is.na(col)) / nrow(health))
-plot(1:ncol(health), col_fraction_missing, type = 'l', col = 'blue', 
+plot(1:ncol(health), col_fraction_missing, type = 'l', col = 'blue',
      main = 'Health - Missing Data', xlab = 'Col #', ylab = 'Percent Missing')
 abline(h = 50, col = 'red')
 
@@ -26,4 +26,3 @@ abline(h = 50, col = 'red')
 #colnames(health)[cols.rm]  # These cols are going to be removed
 #colnames(health)[!cols.rm] # These cols are going to be kept
 #health <- health[ , !cols.rm]
-

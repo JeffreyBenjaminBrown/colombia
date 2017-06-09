@@ -6,14 +6,14 @@ education <- education[ , -1]   # Remove the index column
 # Working on the first seven columns; rename them into English
 colnames(education)[1:2] <- c('municipality_code', 'year')
 
-# The year to a single year
+# Convert the ano column data to a year
 library(lubridate)
 education$year <- year(ymd(education$year))
 table(education$year)
 
 # What percentage of data is found in each column of the file?
 col_fraction_missing <- 100 * apply(education, 2, function(col) sum(is.na(col)) / nrow(education))
-plot(1:ncol(education), col_fraction_missing, type = 'l', col = 'blue', 
+plot(1:ncol(education), col_fraction_missing, type = 'l', col = 'blue',
      main = 'Missing Data Percentage', xlab = 'Col #', ylab = 'Percentage')
 abline(h = 50, col = 'red')
 
@@ -26,4 +26,3 @@ cbind(colnames(education)[fraction_order], col_fraction_missing[fraction_order])
 #colnames(education)[cols.rm]  # These cols are going to be removed
 #colnames(education)[!cols.rm] # These cols are going to be kept
 #education <- education[ , !cols.rm]
-

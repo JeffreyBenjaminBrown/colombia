@@ -14,7 +14,7 @@ table(conflict$year)
 
 # What percentage of data is found in each column of the file?
 col_fraction_missing <- 100 * apply(conflict, 2, function(col) sum(is.na(col)) / nrow(conflict))
-plot(1:ncol(conflict), col_fraction_missing, type = 'l', col = 'blue', 
+plot(1:ncol(conflict), col_fraction_missing, type = 'l', col = 'blue',
      main = 'Conflict - Missing Data', xlab = 'Col #', ylab = 'Percent Missing')
 abline(h = 50, col = 'red')
 
@@ -27,4 +27,3 @@ abline(h = 50, col = 'red')
 #colnames(conflict)[cols.rm]  # These cols are going to be removed
 #colnames(conflict)[!cols.rm] # These cols are going to be kept
 #conflict <- conflict[ , !cols.rm]
-
