@@ -9,18 +9,11 @@ colnames(gov)[1:2] <- c('municipality_code', 'year')
 # Convert year to an integer
 gov$year <- as.integer(gov$year)
 
-# What percentage of data is found in each column of the file?
-col_fraction_missing <- 100 * apply(gov, 2, function(col) sum(is.na(col)) / nrow(gov))
-plot(1:ncol(gov), col_fraction_missing, type = 'l', col = 'blue', 
-     main = 'Gov - Missing Data', xlab = 'Col #', ylab = 'Percent Missing')
-abline(h = 50, col = 'red')
+## Write the refactored data to the refactored-data directory
+write.csv(gov, file = 'refactored-data/gov.csv', row.names = FALSE)
+x <- read.csv('refactored-data/gov.csv', header = T)
 
-#fraction_order <- order(col_fraction_missing)
-#cbind(colnames(gov)[fraction_order], col_fraction_missing[fraction_order])
-
-# Remove columns where > 50% of the data is NA
-#cols.rm <- apply(gov, 2, function(col) sum(is.na(col)) / nrow(gov) >= .5)
-#colnames(gov)[cols.rm]  # These cols are going to be removed
-#colnames(gov)[!cols.rm] # These cols are going to be kept
-#gov <- gov[ , !cols.rm]
-
+# Compare the values in the old and new files
+x <- read.csv('refactored-data/gov.csv', header = T)
+diff <- sapply(1:ncol(x), function(n) max(abs(gov[ , n] - x[ , n]), na.rm = TRUE))
+max(diff)
