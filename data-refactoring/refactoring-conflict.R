@@ -12,18 +12,11 @@ convert_timestamp <- function(x) year(as.POSIXct(x/1000000000, origin = '1970-01
 conflict$year <- sapply(conflict$year, convert_timestamp)
 table(conflict$year)
 
-# What percentage of data is found in each column of the file?
-col_fraction_missing <- 100 * apply(conflict, 2, function(col) sum(is.na(col)) / nrow(conflict))
-plot(1:ncol(conflict), col_fraction_missing, type = 'l', col = 'blue',
-     main = 'Conflict - Missing Data', xlab = 'Col #', ylab = 'Percent Missing')
-abline(h = 50, col = 'red')
+## Write the refactored data to the refactored-data directory
+write.csv(conflict, file = 'refactored-data/conflict.csv', row.names = FALSE)
+x <- read.csv('refactored-data/conflict.csv', header = T)
 
-#fraction_order <- order(col_fraction_missing)
-#cbind(colnames(conflict)[fraction_order], col_fraction_missing[fraction_order])
-
-
-# Remove columns where > 50% of the data is NA
-#cols.rm <- apply(conflict, 2, function(col) sum(is.na(col)) / nrow(conflict) >= .5)
-#colnames(conflict)[cols.rm]  # These cols are going to be removed
-#colnames(conflict)[!cols.rm] # These cols are going to be kept
-#conflict <- conflict[ , !cols.rm]
+# Compare the values in the old and new files
+x <- read.csv('refactored-data/conflict.csv', header = T)
+diff <- sapply(1:ncol(x), function(n) max(abs(conflict[ , n] - x[ , n]), na.rm = TRUE))
+max(diff)
