@@ -13,7 +13,7 @@ table(health$year)
 
 ## Write the refactored data to the refactored-data directory
 write.csv(health, file = 'refactored-data/health.csv', row.names = FALSE)
-x <- read.csv('refactored-data/health.csv', header = T)
+
 
 # Compare the values in the old and new files
 x <- read.csv('refactored-data/health.csv', header = T)

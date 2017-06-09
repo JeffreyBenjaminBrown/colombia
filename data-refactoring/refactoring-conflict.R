@@ -14,7 +14,7 @@ table(conflict$year)
 
 ## Write the refactored data to the refactored-data directory
 write.csv(conflict, file = 'refactored-data/conflict.csv', row.names = FALSE)
-x <- read.csv('refactored-data/conflict.csv', header = T)
+
 
 # Compare the values in the old and new files
 x <- read.csv('refactored-data/conflict.csv', header = T)
