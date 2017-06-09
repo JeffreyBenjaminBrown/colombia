@@ -11,18 +11,11 @@ library(lubridate)
 education$year <- year(ymd(education$year))
 table(education$year)
 
-# What percentage of data is found in each column of the file?
-col_fraction_missing <- 100 * apply(education, 2, function(col) sum(is.na(col)) / nrow(education))
-plot(1:ncol(education), col_fraction_missing, type = 'l', col = 'blue',
-     main = 'Missing Data Percentage', xlab = 'Col #', ylab = 'Percentage')
-abline(h = 50, col = 'red')
+## Write the refactored data to the refactored-data directory
+write.csv(education, file = 'refactored-data/education.csv', row.names = FALSE)
+x <- read.csv('refactored-data/education.csv', header = T)
 
-fraction_order <- order(col_fraction_missing)
-cbind(colnames(education)[fraction_order], col_fraction_missing[fraction_order])
-
-
-# Remove columns where > 50% of the data is NA
-#cols.rm <- apply(education, 2, function(col) sum(is.na(col)) / nrow(education) >= .5)
-#colnames(education)[cols.rm]  # These cols are going to be removed
-#colnames(education)[!cols.rm] # These cols are going to be kept
-#education <- education[ , !cols.rm]
+# Compare the values in the old and new files
+x <- read.csv('refactored-data/education.csv', header = T)
+diff <- sapply(1:ncol(x), function(n) max(abs(education[ , n] - x[ , n]), na.rm = TRUE))
+max(diff)
