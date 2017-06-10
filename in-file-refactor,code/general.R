@@ -4,17 +4,17 @@ general <- read.csv('csv/general.csv', header = TRUE)  #colClasses = c(rep('inte
 general <- general[ , -1]   # Remove the index column
 
 # Changing the first 3 columns to integer
-general$dept_code <- as.integer(general$dept_code)
-general$province_code <- as.integer(general$province_code)
-general$municipality_code <- as.integer(general$municipality_code)
+general$coddepto <- as.integer(general$coddepto)
+general$codprovincia <- as.integer(general$codprovincia)
+general$codmpio <- as.integer(general$codmpio)
 
 # Convert 'ano' to a 4-digit year (from a weird long time format)
 library(lubridate)
 convert_timestamp <- function(x) year(as.POSIXct(x/1000000000, origin = '1970-01-01')) + 1
-general$year <- sapply(general$year, convert_timestamp)
+general$ano <- sapply(general$ano, convert_timestamp)
 
-# Replace the "" in municipality with NA values
-general$municipality[general$municipality == ""] <- NA
+# Replace the "" in municipio with NA values
+general$municipio[general$municipio == ""] <- NA
 
 # Region names are used in a few places below
 region.names <- c('gandina', 'gcaribe', 'gpacifica', 'gorinoquia', 'gamazonia')
