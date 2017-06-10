@@ -8,11 +8,11 @@ library(lubridate)
 health$ano <- year(ymd(health$ano))
 table(health$ano)
 
-## Write the refactored data to the refactored-data directory
-write.csv(health, file = 'refactored-data/health.csv', row.names = FALSE)
+## Write the refactored data to the data,in-file-refactored directory
+write.csv(health, file = 'data,in-file-refactored/health.csv', row.names = FALSE)
 
 
 # Compare the values in the old and new files
-x <- read.csv('refactored-data/health.csv', header = T)
+x <- read.csv('data,in-file-refactored/health.csv', header = T)
 diff <- sapply(1:ncol(x), function(n) max(abs(health[ , n] - x[ , n]), na.rm = TRUE))
 max(diff)

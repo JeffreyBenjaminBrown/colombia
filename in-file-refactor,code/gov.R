@@ -7,7 +7,7 @@ gov <- gov[ , -1]   # Remove the index column
 gov$ano <- as.integer(gov$ano)
 table(gov$ano)
 
-## Write the refactored data to the refactored-data directory
+## Write the refactored data to the data,in-file-refactored directory
 write.csv(gov, file = 'data,in-file-refactored/gov.csv', row.names = FALSE)
 
 

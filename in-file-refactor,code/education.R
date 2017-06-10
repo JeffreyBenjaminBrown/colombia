@@ -10,7 +10,7 @@ table(education$ano) # uniquely in these files, the ano variable in the edu file
 education$ano <- year(ymd(education$ano))
 table(education$ano)
 
-## Write the refactored data to the refactored-data directory
+## Write the refactored data to the data,in-file-refactored directory
 write.csv(education, file = 'data,in-file-refactored/education.csv', row.names = FALSE)
 
 

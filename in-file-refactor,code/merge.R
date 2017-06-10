@@ -9,10 +9,10 @@ merge_df <- function(x, y) {
 ## -----------------------------------------------------------------------------------
 ## Merging general and health;  Keeping the merged result in x
 
-# List files in the refactored-data directory / Read all of them into a list
-files <- list.files('refactored-data')
+# List files in the data,in-file-refactored directory / Read all of them into a list
+files <- list.files('data,in-file-refactored')
 data <- lapply(files, function(file) 
-  read.csv(file = str_c('refactored-data', file, sep = '/'), header = TRUE))
+  read.csv(file = str_c('data,in-file-refactored', file, sep = '/'), header = TRUE))
 
 # Name the data list and initialize x with general since I want that data on the left
 names(data) <- str_sub(files, end = -5)
@@ -39,15 +39,15 @@ plot(missing_row_data, type = 'l', col = 'blue', main = 'Missing Row Data',
 
 
 # Because of the size of the data frame, I've begun using a data table
-system.time(write.csv(x, file = 'refactored-data/merged.csv', row.names = FALSE))
+system.time(write.csv(x, file = 'data,in-file-refactored/merged.csv', row.names = FALSE))
 
 require(data.table)                                 #    user  system elapsed 
 system.time(x <- data.table(x))                     #   1.408   0.392  15.773 
 system.time(setkey(x, municipality_code, year))     #   0.004   0.000   0.003 
-system.time(write.csv(x, file = 'refactored-data/merged2.csv', row.names = FALSE))
+system.time(write.csv(x, file = 'data,in-file-refactored/merged2.csv', row.names = FALSE))
 
-system.time(x <- read.csv('refactored-data/merged.csv', header = TRUE))
-system.time(x <- fread('refactored-data/merged2.csv'))
+system.time(x <- read.csv('data,in-file-refactored/merged.csv', header = TRUE))
+system.time(x <- fread('data,in-file-refactored/merged2.csv'))
 
 # Method       Action   Time    user  system elapsed        Size
 # ----------   ------   ----------------------------      ------

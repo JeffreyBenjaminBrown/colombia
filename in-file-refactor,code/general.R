@@ -22,5 +22,5 @@ region.names <- c('gandina', 'gcaribe', 'gpacifica', 'gorinoquia', 'gamazonia')
 regions <- colSums(t(general[ , colnames(general) %in% region.names]) * 1:length(region.names))
 general$region_factor <- factor(regions, levels = 1:5, labels = c('Andina', 'Caribe', 'Pacifica', 'Orinoquia', 'Amazonia'))
 
-## Write the refactored data to the refactored-data directory
+## Write the refactored data to the data,in-file-refactored directory
 write.csv(general, file = 'data,in-file-refactored/general.csv', row.names = FALSE)

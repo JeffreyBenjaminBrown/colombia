@@ -10,10 +10,10 @@ convert_timestamp <- function(x) year(as.POSIXct(x/1000000000, origin = '1970-01
 conflict$ano <- sapply(conflict$ano, convert_timestamp)
 table(conflict$ano)
 
-## Write the refactored data to the refactored-data directory
-write.csv(conflict, file = 'refactored-data/conflict.csv', row.names = FALSE)
+## Write the refactored data to the data,in-file-refactored directory
+write.csv(conflict, file = 'data,in-file-refactored/conflict.csv', row.names = FALSE)
 
 # Compare the values in the old and new files
-x <- read.csv('refactored-data/conflict.csv', header = T)
+x <- read.csv('data,in-file-refactored/conflict.csv', header = T)
 diff <- sapply(1:ncol(x), function(n) max(abs(conflict[ , n] - x[ , n]), na.rm = TRUE))
 max(diff)
