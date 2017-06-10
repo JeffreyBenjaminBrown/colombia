@@ -1,4 +1,5 @@
 .gitignore
+csv/*.csv
 .Rhistory
 .ipynb_checkpoints/
 *~
