@@ -6,7 +6,10 @@
 # Checking that the regions are all NA on the same rows.  Yes.
 colnames(general)[10]
 gandina.col <- 10
-sapply(1:4, function(n) setdiff(which(is.na(general[ , gandina.col])), which(is.na(general[ , gandina.col + n]))))
+sapply(1:4, function(n) setdiff(
+	      which(is.na(general[ , gandina.col]))
+	    , which(is.na(general[ , gandina.col + n]))
+	    ))
 
 # All of these rows are completely blank;  Dropping them for now
 general <- general[!is.na(general$gandina), ]
