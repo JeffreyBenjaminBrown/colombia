@@ -4,16 +4,16 @@ import pandas as pd
 import functools as functools
 
 # Read dta
-dataGen = pd.read_stata("data/general.dta");
-dataHealth = pd.read_stata("data/health and services.dta");
-dataEdu = pd.read_stata("data/education.dta");
-dataLand = pd.read_stata("data/agriculture and land.dta")
-dataConflict = pd.read_stata("data/conflict.dta")
-dataGov = pd.read_stata("data/governance.dta")
+dataGen = pd.read_stata("original-dta/general.dta");
+dataHealth = pd.read_stata("original-dta/health.dta");
+dataEdu = pd.read_stata("original-dta/education.dta");
+dataLand = pd.read_stata("original-dta/land.dta")
+dataConflict = pd.read_stata("original-dta/conflict.dta")
+dataGov = pd.read_stata("original-dta/governance.dta")
 
 # Save as csv
 dataGen.to_csv('general.csv')
-dataHealth.to_csv('health and services.csv')
+dataHealth.to_csv('health.csv')
 dataEdu.to_csv('education.csv')
 dataLand.to_csv("land.csv")
 dataConflict.to_csv("%configlict.csv")
