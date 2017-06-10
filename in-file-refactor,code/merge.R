@@ -2,7 +2,7 @@ library(stringr)
 
 ## Helper function to make sure that all of the data frames are merged consistently
 merge_df <- function(x, y) {
-  merge(x, y, by = c('municipality_code', 'year'), all.x = TRUE, all.y = TRUE)
+  merge(x, y, by = c('ano', 'codmpio'), all.x = TRUE, all.y = TRUE)
 }
 
 
