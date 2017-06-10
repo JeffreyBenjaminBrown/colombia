@@ -3,16 +3,13 @@
 education <- read.csv('csv/education.csv', header = TRUE)
 education <- education[ , -1]   # Remove the index column
 
-# Working on the first seven columns; rename them into English
-colnames(education)[1:2] <- c('municipality_code', 'year')
-
 # Convert the ano column data to a year
 library(lubridate)
-education$year <- year(ymd(education$year))
+education$year <- year(ymd(education$ano))
 table(education$year)
 
 ## Write the refactored data to the refactored-data directory
-write.csv(education, file = 'refactored-data/education.csv', row.names = FALSE)
+write.csv(education, file = 'data,in-file-refactored/education.csv', row.names = FALSE)
 
 
 # Compare the values in the old and new files
