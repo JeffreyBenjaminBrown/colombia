@@ -16,15 +16,11 @@ general$ano <- sapply(general$ano, convert_timestamp)
 # Replace the "" in municipio with NA values
 general$municipio[general$municipio == ""] <- NA
 
-# Region names are used in a few places below
+# Add to the 5 region columns a region column that contains a factor w/ the region values
+  # The redundancy is useful -- a regression could use 4 of the 5 region dummies
 region.names <- c('gandina', 'gcaribe', 'gpacifica', 'gorinoquia', 'gamazonia')
-
-# Replacing the 5 region columns with a region column that contains a factor w/ the region values
 regions <- colSums(t(general[ , colnames(general) %in% region.names]) * 1:length(region.names))
-general[ , gandina.col] <- factor(regions, levels = 1:5, labels = c('Andina', 'Caribe', 'Pacifica', 'Orinoquia', 'Amazonia'))
-colnames(general)[gandina.col] <- "region"
-general <- general[ , -11:-14]
-general[1:4, 1:15]
+general$region_factor <- factor(regions, levels = 1:5, labels = c('Andina', 'Caribe', 'Pacifica', 'Orinoquia', 'Amazonia'))
 
 ## Write the refactored data to the refactored-data directory
-write.csv(general, file = 'refactored-data/general.csv', row.names = FALSE)
+write.csv(general, file = 'data,in-file-refactored/general.csv', row.names = FALSE)
