@@ -9,7 +9,7 @@
 
 # But if I read the original data:
   library(foreign)
-  general_dta <- read.dta13('data/general.dta')
+  general_dta <- read.dta13('original-dta/general.dta')
 
 # the entries all look identical
   table(general$coddepto)
