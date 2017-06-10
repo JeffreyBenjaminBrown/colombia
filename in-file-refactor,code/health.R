@@ -1,6 +1,6 @@
 # Refactoring the health.csv file from the Colombia data
 
-health <- read.csv('csv/health and services.csv', header = TRUE)
+health <- read.csv('csv/health.csv', header = TRUE)
 health <- health[ , -1]   # Remove the index column
 
 # Convert the ano column data to a year
