@@ -1,12 +1,11 @@
-# if "thought" exists, you can update the maybe-not-extant "talking" this way
+# Offers "make clean" too.
+# If files thought1 and thought2 exists,
+# then you can create|update file "speech" with "make speech".
 
-talking : thought
-	cat thought >> talking
-	echo "no seriously" >> talking
-	cat thought >> talking
+speech : thought1 thought2 # target name : dependencies
+	cat thought1 >> speech
+	echo "no seriously" >> speech
+	cat thought2 >> speech
 
-main.o : talking
-	echo talking
-
-clean :
-	rm thought
+clean : # usual is to delete intermediate dependencies and not final output
+	rm thought1 thought2
