@@ -5,7 +5,21 @@
 outdir=data,in-file-refactored
 codedir=in-file-refactor,code
 
-all: $(outdir)/general.csv $(outdir)/education.csv $(outdir)/land.csv $(outdir)/gov.csv $(outdir)/health.csv $(outdir)/conflict.csv
+all: csv zips
+
+csv: $(outdir)/general.csv $(outdir)/education.csv $(outdir)/land.csv $(outdir)/gov.csv $(outdir)/health.csv $(outdir)/conflict.csv
+
+zips: $(outdir)/conflict.csv.bz2 $(outdir)/education.csv.bz2 \
+      $(outdir)/gov.csv.bz2 $(outdir)/land.csv.bz2
+
+$(outdir)/conflict.csv.bz2: $(outdir)/conflict.csv
+	bzip2 -k $(outdir)/conflict.csv
+$(outdir)/education.csv.bz2: $(outdir)/education.csv
+	bzip2 -k $(outdir)/education.csv
+$(outdir)/gov.csv.bz2: $(outdir)/gov.csv
+	bzip2 -k $(outdir)/gov.csv
+$(outdir)/land.csv.bz2: $(outdir)/land.csv
+	bzip2 -k $(outdir)/land.csv
 
 $(outdir)/general.csv: csv/general.csv
 	Rscript $(codedir)/general.R
