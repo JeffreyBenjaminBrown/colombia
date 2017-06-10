@@ -1,0 +1,7 @@
+.gitignore
+.Rhistory
+.ipynb_checkpoints/
+*~
+__pycache__/
+data/
+
