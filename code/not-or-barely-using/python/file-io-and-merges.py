@@ -26,4 +26,4 @@ dataAll = functools.reduce( # a fold (haskell sense)
     , [dataGen,dataHealth,dataEdu]) # can add datasets here
 
 ## export that
-dataAll.to_csv("csv/all.csv")
+dataAll.to_csv("data/csv/all.csv")

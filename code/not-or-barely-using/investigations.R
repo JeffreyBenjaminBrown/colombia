@@ -1,6 +1,6 @@
 # Refactoring the general.csv file from the Colombia data
 
-x <- read.csv('~/colombia/csv/general.csv', header = TRUE)
+x <- read.csv('~/colombia/data/csv/general.csv', header = TRUE)
                 #colClasses = c(rep('integer', 3), rep('factor', 3), 'double'))
 x <- x[ , -1]   # Remove the index column
 

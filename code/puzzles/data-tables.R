@@ -5,10 +5,10 @@
 require(data.table)                                 #    user  system elapsed 
 system.time(acc <- data.table(acc))                     #   1.408   0.392  15.773 
 system.time(setkey(acc, codmpio, ano))     #   0.004   0.000   0.003 
-system.time(write.csv(acc, file = 'data,in-file-refactored/merged2.csv', row.names = FALSE))
+system.time(write.csv(acc, file = 'data/in-file-refactored/merged2.csv', row.names = FALSE))
 
-system.time(acc <- read.csv('data,in-file-refactored/merged.csv', header = TRUE))
-system.time(acc <- fread('data,in-file-refactored/merged2.csv'))
+system.time(acc <- read.csv('data/in-file-refactored/merged.csv', header = TRUE))
+system.time(acc <- fread('data/in-file-refactored/merged2.csv'))
 
 # Method       Action   Time    user  system elapsed        Size
 # ----------   ------   ----------------------------      ------
