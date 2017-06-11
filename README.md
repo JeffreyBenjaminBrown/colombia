@@ -1,8 +1,8 @@
 # Table of contents
 
-## How to build the data
-## What this repository is
-## Credits
+### How to build the data
+### What this repository is
+### Credits
 
 
 # How to build this data
@@ -27,14 +27,15 @@ make output
 Now you have a data set (under 'data/' called 'merged.csv'. It contains what's in the six individual files, cleaned, homogenized, and merged on city and year.
 
 
-# What this is
+# What this repository is
 
-This repository contains code for data construction and analysis. It uses Colombia's "Panel Municipal CEDE", a yearly panel of cities from 1993 to 2015 covering government, education, health care, land and agriculture, conflict, and "caracteristicas generales". Jeff got it from the .dta files in [Luis's shared DropBox folder](https://www.dropbox.com/sh/3vwshykuw8l7z40/AACvyFjDSCz6ztLhUJNJqUWWa?dl=0).
+This is code for data construction and analysis. It uses Colombia's "Panel Municipal CEDE", a yearly panel of cities from 1993 to 2015 covering government, education, health care, land and agriculture, conflict, and "caracteristicas generales". Jeff got it from the .dta files in [Luis's shared DropBox folder](https://www.dropbox.com/sh/3vwshykuw8l7z40/AACvyFjDSCz6ztLhUJNJqUWWa?dl=0), and converted them to .csv format using the code at 'code/not-or-barely-using/python/file-io-and-merges.py`.
 
 
 # Credits
-The government of Colombia
+el Centro de Estudios sobre Desarrollo Económico
+   , Universidad de los Andes
+   , Bogota, Colombia
 Luis Carlos Reyes
 Larry Hignight
 Jeff Brown
-
