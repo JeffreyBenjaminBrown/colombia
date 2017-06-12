@@ -3,7 +3,7 @@ outdir := data/in-file-refactored
 codedir := code/in-file-refactor
 
 
-# goal sets
+# sets of targets
 .PHONY: most singles
 
 output: data/merged.csv singles
@@ -13,7 +13,7 @@ zips: $(outdir)/conflict.csv.bz2 $(outdir)/education.csv.bz2 \
 
 singles: $(outdir)/general.csv $(outdir)/education.csv $(outdir)/land.csv $(outdir)/gov.csv $(outdir)/health.csv $(outdir)/conflict.csv
 
-# raw_csv: data/csv/gov.csv data/csv/general.csv data/csv/land.csv data/csv/health.csv data/csv/education.csv data/csv/conflict.csv
+raw_csv: data/csv/gov.csv data/csv/general.csv data/csv/land.csv data/csv/health.csv data/csv/education.csv data/csv/conflict.csv
 
 
 # single-file goals
