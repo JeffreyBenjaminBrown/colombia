@@ -4,9 +4,12 @@ for (main_column in theCols) {
     dir.create( str_c( 'figures/', main_column ) )
     for (column in theCols[theCols != main_column]) {
         png( str_c( 'figures/', main_column, '/', column, '.png' ) ) # png ~ dev.on
-        plot ( colombia[, main_column], colombia[,column]
-            , xlab = main_column, ylab = column
-              )
+        plot ( jitter( colombia[, main_column] )
+             , jitter( colombia[, column]      )
+               # jitter prevents clouds from looking like points
+             , xlab = main_column, ylab = column
+             , pch = 19, cex = .5, col = 'blue'
+             )
         dev.off()
     }
 }

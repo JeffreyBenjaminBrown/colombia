@@ -3,16 +3,19 @@ setwd('colombia')
 colombia <- read.csv('data/merged.csv')
 
 colombia$pobl_log <- log( colombia$pobl_tot ) / log(10)
-
 colombia$nacimientos_per_kp <- 1000 * colombia$nacimientos / colombia$pobl_tot
-summary( colombia[c('nacimientos_per_kp','nacimientos','pobl_tot') ] )
-
-colombia$pib_pb_derived <- colombia$pib_total / colombia$pobl_tot
-summary( colombia[c('pib_pb_derived','pib_total', 'pobl_tot')])
-
+colombia$pib_percapita_derived <- colombia$pib_total / colombia$pobl_tot
 colombia$prestadores_pk_derived <- 1000 * colombia$prestadores / colombia$pobl_tot
+
+# examine the derived columns
+summary( colombia[c('nacimientos_per_kp','nacimientos','pobl_tot') ] )
+summary( colombia[c('pib_percapita_derived','pib_total', 'pobl_tot')])
 summary( colombia[c('prestadores_pk_derived','prestadores', 'pobl_tot')])
 
+# Identify mostly-missing rows
+missing_row_data <- table(apply(acc, 1, function(row) round(sum(is.na(row)) / ncol(acc), 2)))
+plot(missing_row_data, type = 'l', col = 'blue', main = 'Missing Row Data',
+     xlab = 'Fraction Missing', sub = '(0 = no missing data)', ylab = '# of Rows')
 
 # ==== ==== Pictures
 # log of population X births per thousand persons

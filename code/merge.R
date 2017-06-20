@@ -1,14 +1,11 @@
 library(stringr)
 
-## We'll merge the six data sets pairwise with this
+# We'll merge the six data sets pairwise, using this
 merge_df <- function(x, y) {
   merge(x, y,
   by = c('ano', 'codmpio'),
   all.x = TRUE, all.y = TRUE)
 }
-
-## -----------------------------------------------------------------------------------
-## Merge general and health; keep the merged result in acc ("accumulator")
 
 # List files in the data/in-file-refactored directory / Read all of them into a list
 csv_files <- list.files('data/in-file-refactored'
@@ -16,7 +13,7 @@ csv_files <- list.files('data/in-file-refactored'
 data <- lapply(csv_files, function(file) 
   read.csv(file = str_c('data/in-file-refactored', file, sep = '/'), header = TRUE))
 
-# Name the data list and initialize acc with general.csv since I want that data on the left
+# Start with general.csv since I want that data on the left
 names(data) <- str_sub(csv_files, end = -5)
 acc <- data[['general']]
 data[['general']] <- NULL  # Remove the general df from the list
@@ -31,13 +28,11 @@ while (length(data) > 0) {
 # Remove the now empty data list
 rm(data, merge_df, csv_files)
 
-# Just curious...
-nrow(acc)
-ncol(acc)
+# Derive a few variables
+acc$pobl_log <- log( acc$pobl_tot ) / log(10)
+acc$nacimientos_per_kp <- 1000 * acc$nacimientos / acc$pobl_tot
+acc$pib_percapita_derived <- acc$pib_total / acc$pobl_tot
+acc$prestadores_pk_derived <- 1000 * acc$prestadores / acc$pobl_tot
 
-# Identify mostly-missing rows
-missing_row_data <- table(apply(acc, 1, function(row) round(sum(is.na(row)) / ncol(acc), 2)))
-plot(missing_row_data, type = 'l', col = 'blue', main = 'Missing Row Data',
-     xlab = 'Fraction Missing', sub = '(0 = no missing data)', ylab = '# of Rows')
-
+# Write
 system.time(write.csv(acc, file = 'data/merged.csv', row.names = FALSE))
