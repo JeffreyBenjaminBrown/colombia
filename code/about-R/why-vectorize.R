@@ -18,11 +18,14 @@ for (i in 1:num.missing)
 
 # Slow function using a loop
 visualize_missing_slow <- function(theData) {
-    plot(1, 1, pch = '.'
+    plot(1, 1 # just to start, plot a dot
+        , pch = '.'
         , xlim = c(1, nrow(theData)), ylim = c(1, ncol(theData))
         , xlab = 'Row #', ylab = 'Col #')
-  for (r in 1:nrow(theData)) for (c in 1:ncol(theData))
-    if (is.na(theData[r, c])) points(r, c, pch = 19, cex = .1, col = 'blue')
+    for (r in 1:nrow(theData))
+        for (c in 1:ncol(theData))
+            if (is.na(theData[r, c]))
+                points(r, c, pch = 19, cex = .1, col = 'blue')
 }
 
 
@@ -40,4 +43,3 @@ visualize_missing_fast <- function(theData) {
                                         #     user  system elapsed
 system.time(visualize_missing_slow(theData))  #   64.480   2.388  92.477 - 300x500 w/ 10K missing
 system.time(visualize_missing_fast(theData))  #    1.496   0.016   1.614 - 300x500 w/ 10K missing
-
